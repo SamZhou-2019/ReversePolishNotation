@@ -14,7 +14,11 @@ headers = {
 
 def get_soup(url):
     # 获取超文本
-    url_html = requests.get(url, headers=headers)
+    try:
+        url_html = requests.get(url, headers=headers)
+    except:
+        print("获取数据发生错误，请检查网络连接。")
+        exit(-5)
     url_html.encoding = 'utf8'
     # 解析网页
     _soup_ = BeautifulSoup(url_html.text, 'lxml')
@@ -59,6 +63,8 @@ def spider(web):
 
 
 def spider_module():
+    if os.path.exists('data.csv'):
+        os.remove('data.csv')
     global item_no
     item_no = 0
     global start_time
